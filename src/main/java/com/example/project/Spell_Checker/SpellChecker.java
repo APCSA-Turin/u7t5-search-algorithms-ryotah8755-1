@@ -18,9 +18,6 @@ public class SpellChecker {
         return dictionary;
     }
 
-    public int getLoopCounter(){
-        return loopCounter;
-    }
 
     /** This uses LINEAR search to find a word in dictionary and returns
      *  true if the word is in dictionary and false otherwise.
@@ -49,10 +46,40 @@ public class SpellChecker {
      *  It also tracks the number of words checked (loop iterations) and
      *  prints that value out before returning.
      */
+
+
     public boolean binarySpellCheck(String word) {
+        int leftIdx = 0;  
+        int rightIdx = dictionary.size() - 1;  
+        loopCounter = 0;  
+    
+    
+        while (leftIdx <= rightIdx) {  
+            loopCounter++;  
+            int middleIdx = leftIdx + (rightIdx - leftIdx) / 2;  
+            String middleWord = dictionary.get(middleIdx);
+            int comparison = middleWord.compareTo(word);
+
+      
+
+            if (comparison == 0) {
+                System.out.println("Word found in " + loopCounter + " checks.");
+                return true;  
+            } else if (comparison < 0) {  
+                leftIdx = middleIdx + 1;  
+            } else {
+                rightIdx = middleIdx - 1;  
+            }
+        }
+
+        System.out.println("Word NOT found after " + loopCounter + " checks.");
         return false;
     }
 
+    public int getLoopCounter() { 
+        return loopCounter;  // Return last stored loop count
+    }
+    
     // private helper method, called in the constructor, which loads the words
     // from the dictionary.txt text file into the "dictionary" instance variable!
     private void importDictionary() {
